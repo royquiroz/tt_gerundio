@@ -1,13 +1,11 @@
-import { Router } from "express";
-import {
+const router = require("express").Router();
+const {
   createUser,
   deleteUser,
   getAllUsers,
   getUser,
   updateUser,
-} from "../controllers/userController";
-
-const router = Router();
+} = require("../controllers/userController");
 
 router.get("/", async (req, res) => {
   try {
@@ -51,15 +49,15 @@ router.put("/:value", async (req, res) => {
   }
 });
 
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const { query } = req;
+    const { params } = req;
 
-    await deleteUser(query.id);
-    res.send({ message: `User with id "${query.id}" remove` });
+    await deleteUser(params.id);
+    res.send({ message: `User with id "${params.id}" remove` });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 });
 
-export default router;
+module.exports = router;

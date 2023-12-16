@@ -1,37 +1,37 @@
-import { isValidObjectId } from "mongoose";
+const Moongose = require("mongoose");
+const UserModel = require("../models/userModel");
 
-import User from "../models/userModel";
-
-export async function getAllUsers() {
+const getAllUsers = async () => {
   try {
-    const users = await User.find();
+    const users = await UserModel.find();
+
     return users;
   } catch (error) {
     throw new Error(error.message);
   }
-}
+};
 
-export async function getUser(value) {
+const getUser = async (value) => {
   try {
     let user;
 
-    if (isValidObjectId(value)) {
-      user = await User.findById(value);
+    if (Moongose.isValidObjectId(value)) {
+      user = await UserModel.findById(value);
     }
 
     if (!user) {
-      user = await User.findOne({ email: value });
+      user = await UserModel.findOne({ email: value });
     }
 
     return user;
   } catch (error) {
     throw new Error(error.message);
   }
-}
+};
 
-export async function createUser(userData) {
+const createUser = async (userData) => {
   try {
-    const user = await User.create(userData);
+    const user = await UserModel.create(userData);
 
     return user;
   } catch (error) {
@@ -42,9 +42,9 @@ export async function createUser(userData) {
 
     throw new Error(error.message);
   }
-}
+};
 
-export async function updateUser(value, body) {
+const updateUser = async (value, body) => {
   const user = await getUser(value);
 
   try {
@@ -54,11 +54,11 @@ export async function updateUser(value, body) {
   } catch (error) {
     throw new Error(error.message);
   }
-}
+};
 
-export async function deleteUser(id) {
+const deleteUser = async (id) => {
   try {
-    const { deletedCount } = await User.deleteOne({ _id: id });
+    const { deletedCount } = await UserModel.deleteOne({ _id: id });
 
     if (deletedCount === 0) throw new Error(`User with id "${id}" not found`);
 
@@ -66,4 +66,12 @@ export async function deleteUser(id) {
   } catch (error) {
     throw new Error(error.message);
   }
-}
+};
+
+module.exports = {
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
+};

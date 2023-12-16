@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    name: {
+    first_name: {
       type: String,
     },
     last_name: {
@@ -27,7 +27,7 @@ const userSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["Masculino", "Femenino"],
+      enum: ["Male", "Female"],
     },
   },
   {
@@ -38,4 +38,4 @@ const userSchema = new Schema(
   }
 );
 
-export default mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
