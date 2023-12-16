@@ -6,25 +6,28 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: "Campo de nombre es obligatorio",
     },
     last_name: {
       type: String,
-      required: "Campo de apellido es obligatorio",
     },
     email: {
       type: String,
       unique: true,
-      required: "Campo de email es obligatorio",
-    },
-    password: {
-      type: String,
+      lowercase: true,
       required: true,
+    },
+    username: {
+      type: String,
+      minLength: 4,
+      required: true,
+    },
+    age: {
+      type: Number,
+      min: 18,
     },
     gender: {
       type: String,
-      required: true,
-      enum: ["Masculino", "Femenino", "Otro"],
+      enum: ["Masculino", "Femenino"],
     },
   },
   {

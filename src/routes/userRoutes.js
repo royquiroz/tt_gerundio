@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createUser,
   deleteUser,
+  getAllUsers,
   getUser,
   updateUser,
 } from "../controllers/userController";
@@ -10,78 +11,55 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const users = await getUser();
-    res.send({ users });
+    const user = await getAllUsers();
+    res.send(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ error });
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/:value", async (req, res) => {
+  try {
+    const { params } = req;
+
+    const user = await getUser(params.value);
+    res.send(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
 router.post("/", async (req, res) => {
   try {
     const { body } = req;
+
     const user = await createUser(body);
     res.send({ user });
   } catch (error) {
-    console.log({ error });
-    res.status(500).send({ error });
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/:value", async (req, res) => {
   try {
-    const { body } = req;
-    const user = await updateUser(body);
+    const { body, params } = req;
+
+    const user = await updateUser(params.value, body);
     res.send({ user });
   } catch (error) {
-    console.log({ error });
-    res.status(500).send({ error });
+    res.status(500).json({ error: error.message });
   }
 });
 
 router.delete("/", async (req, res) => {
   try {
-    const { body } = req;
-    const user = await deleteUser(body);
-    res.send({ user });
+    const { query } = req;
+
+    await deleteUser(query.id);
+    res.send({ message: `User with id "${query.id}" remove` });
   } catch (error) {
-    console.log({ error });
-    res.status(500).send({ error });
+    res.status(500).send({ error: error.message });
   }
 });
-
-// router.post("/auth", async (req, res) => {
-//   try {
-//     const { body } = req;
-//     const user = await getUserByEmail(body);
-
-//     if (user.length <= 0) return res.send("This user does not exist in the db");
-
-//     if (!compareSync(body.password, user[0].password))
-//       return res.send("La contraseña es incorrecta");
-
-//     return res.send({ user });
-//   } catch (error) {
-//     console.log({ error });
-//     res.status(500).send({ error });
-//   }
-// });
-
-// router.post("/register", async (req, res) => {
-//   try {
-//     const { body } = req;
-
-//     const salt = genSaltSync(256);
-//     const hashedPassword = hashSync(body.password, salt);
-//     body.password = hashedPassword;
-
-//     const user = await createUser(body);
-//     return res.send({ user });
-//   } catch (error) {
-//     console.log({ error });
-//     res.status(500).send({ error });
-//   }
-// });
 
 export default router;
