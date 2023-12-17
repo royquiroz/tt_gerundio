@@ -8,8 +8,6 @@ const mongoose = require("mongoose");
 
 const userRoutes = require("./routes/userRoutes");
 
-// import { appConfig } from "./config";
-
 const PORT = process.env.PORT || 4001;
 const DB = process.env.DB;
 

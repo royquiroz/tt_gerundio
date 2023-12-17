@@ -7,6 +7,9 @@ const {
   updateUser,
 } = require("../controllers/userController");
 
+/**
+ * Get all the users created in the user database
+ */
 router.get("/", async (req, res) => {
   try {
     const user = await getAllUsers();
@@ -16,6 +19,9 @@ router.get("/", async (req, res) => {
   }
 });
 
+/**
+ * Get a user in the database either by id or email
+ */
 router.get("/:value", async (req, res) => {
   try {
     const { params } = req;
@@ -27,6 +33,9 @@ router.get("/:value", async (req, res) => {
   }
 });
 
+/**
+ * Create new user
+ */
 router.post("/", async (req, res) => {
   try {
     const { body } = req;
@@ -38,6 +47,9 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * Edit a previously created user
+ */
 router.put("/:value", async (req, res) => {
   try {
     const { body, params } = req;
@@ -49,6 +61,9 @@ router.put("/:value", async (req, res) => {
   }
 });
 
+/**
+ * Delete user by id
+ */
 router.delete("/:id", async (req, res) => {
   try {
     const { params } = req;

@@ -1,6 +1,11 @@
 const Moongose = require("mongoose");
 const UserModel = require("../models/userModel");
 
+/**
+ * Return all Users
+ *
+ * @returns {Array} Return array users
+ */
 const getAllUsers = async () => {
   try {
     const users = await UserModel.find();
@@ -11,6 +16,12 @@ const getAllUsers = async () => {
   }
 };
 
+/**
+ * Return user for id or email
+ * @param {String} string - id or email for user
+ *
+ * @returns {Object} Return user
+ */
 const getUser = async (value) => {
   try {
     let user;
@@ -29,6 +40,12 @@ const getUser = async (value) => {
   }
 };
 
+/**
+ * Create new user and return user
+ * @param {String} string - id or email for user
+ *
+ * @returns {Object} Return user created
+ */
 const createUser = async (userData) => {
   try {
     const user = await UserModel.create(userData);
@@ -44,6 +61,14 @@ const createUser = async (userData) => {
   }
 };
 
+/**
+ * Update and return user
+ * @param {String} string - id or email for user
+ *
+ * @param {Object} object - values for update user
+ *
+ * @returns {Object} Return user updated
+ */
 const updateUser = async (value, body) => {
   const user = await getUser(value);
 
@@ -56,6 +81,10 @@ const updateUser = async (value, body) => {
   }
 };
 
+/**
+ * Create new user and return user
+ * @param {String} string - id for user
+ */
 const deleteUser = async (id) => {
   try {
     const { deletedCount } = await UserModel.deleteOne({ _id: id });
