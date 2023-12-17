@@ -1,3 +1,7 @@
+# API Users
+
+This project was built following the concepts of NestJS for application development, organizing the business logic in services, the data in models, and the API in controllers.
+
 ## Quick Start
 
 1- Clone or download project and enter the project folder.
@@ -22,6 +26,14 @@
 
 ```bash
   npm run dev
+```
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  npm run test
 ```
 
 ## Stack
